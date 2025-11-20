@@ -6,6 +6,7 @@ import org.example.artyom.rpgClasses.commands.GUICommand;
 import org.example.artyom.rpgClasses.commands.HandleClasses;
 import org.example.artyom.rpgClasses.commands.HandleJobs;
 import org.example.artyom.rpgClasses.eventHandlers.ClassesGuiEvents;
+import org.example.artyom.rpgClasses.eventHandlers.JobsEvents;
 import org.example.artyom.rpgClasses.eventHandlers.JobsGUIEvents;
 import org.example.artyom.rpgClasses.eventHandlers.ScoreboardEvents;
 import org.example.artyom.rpgClasses.plugins.Classes;
@@ -19,7 +20,9 @@ public final class RpgClasses extends JavaPlugin {
         // Plugin startup logic
         Bukkit.getPluginManager().registerEvents(new ClassesGuiEvents(), this);
         Bukkit.getPluginManager().registerEvents(new JobsGUIEvents(), this);
+        Bukkit.getPluginManager().registerEvents(new JobsEvents(this), this);
         Bukkit.getPluginManager().registerEvents(new ScoreboardEvents(), this);
+
         getCommand("getclass").setExecutor(new HandleClasses());
         getCommand("getjobs").setExecutor(new HandleJobs());
         getCommand("gui").setExecutor(new GUICommand());

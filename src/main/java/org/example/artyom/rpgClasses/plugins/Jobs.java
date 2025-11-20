@@ -11,7 +11,7 @@ public enum Jobs {
     ALCHEMIST("Alchemist", Material.BREWING_STAND),
     ENCHANTER("Enchanter", Material.ENCHANTED_BOOK),
 
-    NULL("Null", Material.LAPIS_LAZULI),;
+    NULL("Null", null),;
 
 //    private int HP;
 //    private int strength;
