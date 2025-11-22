@@ -22,7 +22,7 @@ public final class RpgClasses extends JavaPlugin {
         // Plugin startup logic
         Bukkit.getPluginManager().registerEvents(new ClassesGuiEvents(), this);
         Bukkit.getPluginManager().registerEvents(new JobsGUIEvents(), this);
-        Bukkit.getPluginManager().registerEvents(new JobsEvents(this), this);
+        Bukkit.getPluginManager().registerEvents(new JobsEvents(), this);
         Bukkit.getPluginManager().registerEvents(new ScoreboardEvents(), this);
 
         getCommand("getclass").setExecutor(new HandleClasses());

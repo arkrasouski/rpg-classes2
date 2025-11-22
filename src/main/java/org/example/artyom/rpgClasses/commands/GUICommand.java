@@ -8,6 +8,7 @@ import org.example.artyom.rpgClasses.gui.ClassesGUI;
 import org.example.artyom.rpgClasses.gui.JobGUI;
 
 public class GUICommand implements CommandExecutor {
+    //Команды открытия GUI выбора класса и профессии
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if(cmd.getName().equalsIgnoreCase("gui")) {
             if(sender instanceof Player) {

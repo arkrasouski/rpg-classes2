@@ -1,15 +1,15 @@
 package org.example.artyom.rpgClasses.commands;
 
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.example.artyom.rpgClasses.customEvents.ChangeClassEvent;
 import org.example.artyom.rpgClasses.plugins.Classes;
 import org.example.artyom.rpgClasses.utils.PlayerClassesUtils;
 
 public class HandleClasses implements CommandExecutor {
+    //Обработка команды выдачи класса
+    //возможно тут стоит сбрасывать профессию
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
         Player player = (Player) commandSender;

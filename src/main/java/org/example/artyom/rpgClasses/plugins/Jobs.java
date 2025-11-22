@@ -7,16 +7,15 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 public enum Jobs {
+    //Класс выбора профессии
+    //возможно тут стоит перечислять сразу классы доступные для профессии
     BLACKSMITH("Blacksmith", Material.ANVIL),
     ALCHEMIST("Alchemist", Material.BREWING_STAND),
     ENCHANTER("Enchanter", Material.ENCHANTED_BOOK),
 
-    NULL("Null", null),;
+    NULL("Null", null); //Безработный
 
-//    private int HP;
-//    private int strength;
-//    private int agility;
-//    private int mana;
+
     private String name;
     private Material classMaterial;
     public static String menuName = "Jobs";

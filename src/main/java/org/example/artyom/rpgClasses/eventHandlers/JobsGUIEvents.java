@@ -2,7 +2,6 @@ package org.example.artyom.rpgClasses.eventHandlers;
 
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
-import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -11,6 +10,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 
 public class JobsGUIEvents implements Listener {
+    //обработка выбора профессии игрока
     @EventHandler
     public void onInventoryClick(InventoryClickEvent e) { //вызовется когда буду кликать по открытому ранее инвернтарю
         Player p = (Player) e.getWhoClicked();

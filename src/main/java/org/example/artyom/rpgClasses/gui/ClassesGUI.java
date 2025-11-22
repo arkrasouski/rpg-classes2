@@ -9,9 +9,11 @@ import org.example.artyom.rpgClasses.plugins.Classes;
 import org.example.artyom.rpgClasses.utils.ItemUtils;
 
 public class ClassesGUI {
+    //Класс GUi выбора класса игрока
     public static void openGUI(Player p) {
-        Inventory inv = Bukkit.createInventory(p, 9, "Выбор класса");
 
+        Inventory inv = Bukkit.createInventory(p, 9, "Выбор класса");
+        //Перечисляем доступные классы
         Classes wizard = Classes.WIZARD;
         Classes warrior = Classes.WARRIOR;
         Classes sacrifier = Classes.SACRIFIER;

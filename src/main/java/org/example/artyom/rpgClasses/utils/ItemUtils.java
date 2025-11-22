@@ -10,7 +10,9 @@ import org.bukkit.persistence.PersistentDataType;
 import java.util.ArrayList;
 
 public class ItemUtils {
+    //Вспомогательный класс для работы с предметами
     public static ItemStack create(Material material, int amount, String displayName, String menu_class, String lore1, String lore2, String lore3, String lore4) {
+        //Создаем кастомный предмет
         ItemStack item = new ItemStack(material, amount);
         ItemMeta meta = item.getItemMeta();
         assert meta != null;

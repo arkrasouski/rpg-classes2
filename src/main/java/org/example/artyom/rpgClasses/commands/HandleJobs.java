@@ -4,12 +4,12 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.example.artyom.rpgClasses.plugins.Classes;
 import org.example.artyom.rpgClasses.plugins.Jobs;
 import org.example.artyom.rpgClasses.utils.PlayerClassesUtils;
 import org.example.artyom.rpgClasses.utils.PlayerJobsUtils;
 
 public class HandleJobs implements CommandExecutor {
+    //Обработка команды выдачи Профессии
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
         Player player = (Player) commandSender;
@@ -21,7 +21,6 @@ public class HandleJobs implements CommandExecutor {
         if (PlayerClassesUtils.getPlayerClass(player) != null) {
         try {
             Jobs job = Jobs.valueOf(strings[0]);
-            //ArmsHandler.handle(scroll, player);
 
             if (job.getName().equalsIgnoreCase("blacksmith")){
                 PlayerJobsUtils.giveJobParametersToPlayer(player, "blacksmith");

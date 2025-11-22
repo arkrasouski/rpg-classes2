@@ -1,28 +1,25 @@
 package org.example.artyom.rpgClasses.utils;
 
-import com.google.common.collect.Multimap;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.EquipmentSlotGroup;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ArmorMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.example.artyom.rpgClasses.RpgClasses;
-import org.example.artyom.rpgClasses.customEvents.ChangeClassEvent;
 import org.example.artyom.rpgClasses.customEvents.ChangeJobEvent;
-import org.example.artyom.rpgClasses.plugins.Classes;
+
 import org.example.artyom.rpgClasses.plugins.Jobs;
 
-import java.util.Collection;
 
 public class PlayerJobsUtils {
+    //Вспомогательный класс для работы с профессиями
     public static void setPlayerJob(Player player, String className) {
+        //Установка профессии игроку
         player.getPersistentDataContainer().set(
                 new NamespacedKey(RpgClasses.getInstance(), "player_job"),
                 PersistentDataType.STRING,
@@ -31,6 +28,7 @@ public class PlayerJobsUtils {
     }
 
     public static void setPlayerJobLevel(Player player, int level) {
+        //Установка уровня профессии игрока
         player.getPersistentDataContainer().set(
                 new NamespacedKey(RpgClasses.getInstance(),getPlayerJob(player) + "_level" ),
                 PersistentDataType.INTEGER,
@@ -40,6 +38,7 @@ public class PlayerJobsUtils {
     }
 
     public static void setPlayerJobExp(Player player, int exp) {
+        //Установка уровня прогресса опыта профессии игрока
         player.getPersistentDataContainer().set(
                 new NamespacedKey(RpgClasses.getInstance(), getPlayerJob(player) + "_exp"),
                 PersistentDataType.INTEGER,
@@ -49,6 +48,7 @@ public class PlayerJobsUtils {
     }
 
     public static String getPlayerJob(Player player) {
+        //Получение профессии игрока
         return player.getPersistentDataContainer().get(
                 new NamespacedKey(RpgClasses.getInstance(),"player_job"),
                 PersistentDataType.STRING
@@ -56,6 +56,7 @@ public class PlayerJobsUtils {
     }
 
     public static int getPlayerJobLevel(Player player) {
+        //Получение уровня профессии игрока
         String job = getPlayerJob(player);
 
         if (job == null || job.equalsIgnoreCase("NULL")) {
@@ -67,15 +68,10 @@ public class PlayerJobsUtils {
         ) == null ? 0 : player.getPersistentDataContainer().get(new NamespacedKey(RpgClasses.getInstance(),getPlayerJob(player) + "_level"),
                 PersistentDataType.INTEGER);
 
-
-
-//        return getPlayerJob(player).equalsIgnoreCase("NULL") ? 0 : player.getPersistentDataContainer().get(
-//                NamespacedKey.fromString(getPlayerJob(player) + "_level"),
-//                PersistentDataType.INTEGER
-//        );
     }
 
     public static int getPlayerJobExp(Player player) {
+        //Получение прогресса опыта профессии игрока
         String job = getPlayerJob(player);
 
         if (job == null || job.equalsIgnoreCase("NULL")) {
@@ -89,12 +85,14 @@ public class PlayerJobsUtils {
     }
 
     public static void giveJobParametersToPlayer(Player player, String className) {
+        //Установка профессии и вызов ивента изменения профессии для scoreboard
         player.sendMessage("I`m " + className + "!");
         PlayerJobsUtils.setPlayerJob(player, className);
         Bukkit.getPluginManager().callEvent(new ChangeJobEvent(player, Jobs.valueOf(className.toUpperCase())));
     }
 
-    public static void addArmor(ItemStack item, double addAmount, EquipmentSlotGroup slot, NamespacedKey key) {
+    public static void addArmor(ItemStack item, double addAmount, EquipmentSlotGroup slot, NamespacedKey key, int level) {
+        //Добавление очков брони для брони созданной кузнецом
         if (item == null || item.getType().isAir()) return;
 
         ItemMeta meta = item.getItemMeta();
@@ -124,7 +122,7 @@ public class PlayerJobsUtils {
         ;
 
         // Новый итог
-        double newArmor = PlayerJobsUtils.getVanillaArmorValue(item.getType()) + addAmount; // + currentArmor;
+        double newArmor = (PlayerJobsUtils.getVanillaArmorValue(item.getType()) + addAmount ) + (double) level / 10; // + currentArmor;
 
         AttributeModifier newMod = new AttributeModifier(
                 key,
@@ -138,8 +136,41 @@ public class PlayerJobsUtils {
         item.setItemMeta(meta);
     }
 
+    public static int changeJobLevelOrExp(Player player, int levelThreshold, boolean getThreshold) { //пороговое значение
+        //Обновление уровней профессии
+
+        int level = PlayerJobsUtils.getPlayerJobLevel(player);
+        int maxLevelThreshold = levelThreshold + level * 2;
+
+        if(getThreshold) {
+            return maxLevelThreshold;
+        }
+        int exp = PlayerJobsUtils.getPlayerJobExp(player);
+        exp += 1;
+
+
+        if (exp >= maxLevelThreshold) {
+
+            level += 1;
+            PlayerJobsUtils.setPlayerJobLevel(player, level);
+            PlayerJobsUtils.setPlayerJobExp(player, exp - maxLevelThreshold);
+
+        } else {
+            PlayerJobsUtils.setPlayerJobExp(player, exp);
+        }
+        return  maxLevelThreshold;
+    }
+
+    public static int changeJobLevelOrExp(Player player, int levelThreshold) {
+        return changeJobLevelOrExp(player, levelThreshold, false); //Перегрузка для получения максимума прогресса уровня
+    }
+
+    public static int changeLevelOrExp(Player player) {
+        return changeJobLevelOrExp(player, 5, true);
+    }
     private static int getVanillaArmorValue(Material mat) {
-        // ногi (boots)
+        //Перечисление базовых игровых очков брони
+        // ноги (boots)
         switch (mat) {
             case LEATHER_BOOTS: return 1;
             case GOLDEN_BOOTS: return 1;
