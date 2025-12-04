@@ -84,11 +84,11 @@ public class PlayerJobsUtils {
                 PersistentDataType.INTEGER);
     }
 
-    public static void giveJobParametersToPlayer(Player player, String className) {
+    public static void giveJobParametersToPlayer(Player player, Jobs job) {
         //Установка профессии и вызов ивента изменения профессии для scoreboard
-        player.sendMessage("I`m " + className + "!");
-        PlayerJobsUtils.setPlayerJob(player, className);
-        Bukkit.getPluginManager().callEvent(new ChangeJobEvent(player, Jobs.valueOf(className.toUpperCase())));
+        // player.sendMessage("I`m " + className + "!");
+        PlayerJobsUtils.setPlayerJob(player, job.toString().toLowerCase());
+        Bukkit.getPluginManager().callEvent(new ChangeJobEvent(player, job));
     }
 
     public static void addArmor(ItemStack item, double addAmount, EquipmentSlotGroup slot, NamespacedKey key, int level) {
@@ -132,7 +132,7 @@ public class PlayerJobsUtils {
         );
         //System.out.println(meta.getAttributeModifiers(Attribute.GENERIC_ARMOR).toString());
 
-        meta.addAttributeModifier(Attribute.GENERIC_ARMOR, newMod);
+        meta.addAttributeModifier(Attribute.ARMOR, newMod);
         item.setItemMeta(meta);
     }
 
@@ -162,7 +162,7 @@ public class PlayerJobsUtils {
     }
 
     public static int changeJobLevelOrExp(Player player, int levelThreshold) {
-        return changeJobLevelOrExp(player, levelThreshold, false); //Перегрузка для получения максимума прогресса уровня
+        return changeJobLevelOrExp(player, levelThreshold, false); // Перегрузка для получения максимума прогресса уровня
     }
 
     public static int changeLevelOrExp(Player player) {

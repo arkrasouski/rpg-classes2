@@ -1,5 +1,6 @@
 name: rpg-classes
-version: '1.0-SNAPSHOT'
+prefix: rpg-classes
+version: '1.0'
 main: org.example.artyom.rpgClasses.RpgClasses
 api-version: '1.21'
 

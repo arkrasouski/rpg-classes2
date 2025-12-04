@@ -14,19 +14,18 @@ public class ClassesGuiEvents implements Listener {
     public void onInventoryClick(InventoryClickEvent e) { //вызовется когда буду кликать по открытому ранее инвернтарю
         //обработка выбора класса игрока
         Player p = (Player) e.getWhoClicked();
- 
-        if(e.getView().getTitle().equalsIgnoreCase("Выбор класса")){
+
+        if (e.getView().getTitle().equalsIgnoreCase("Выбор класса")) {
             e.setCancelled(true);
             ItemStack item = e.getCurrentItem();
             String menuItemString = item.getItemMeta().getPersistentDataContainer().get(NamespacedKey.fromString("menu_item"), PersistentDataType.STRING);
-            if(item.getType() == Material.OAK_DOOR && menuItemString.equals("Exit")){
+            if (item.getType() == Material.OAK_DOOR && menuItemString.equals("Exit")) {
                 p.closeInventory();
-            }
-            else if(menuItemString.equals("Classes")){
-                System.out.println(item.getItemMeta().getDisplayName());
+            } else if (menuItemString.equals("Classes")) {
                 p.performCommand("getclass " + item.getItemMeta().getDisplayName().toUpperCase());
             }
-            p.closeInventory();}
+            p.closeInventory();
+        }
 
     }
 }

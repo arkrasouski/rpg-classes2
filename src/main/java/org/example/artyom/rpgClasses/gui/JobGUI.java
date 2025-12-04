@@ -1,5 +1,7 @@
 package org.example.artyom.rpgClasses.gui;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -9,6 +11,8 @@ import org.example.artyom.rpgClasses.plugins.Jobs;
 import org.example.artyom.rpgClasses.utils.ItemUtils;
 import org.example.artyom.rpgClasses.utils.PlayerClassesUtils;
 
+import java.util.List;
+
 public class JobGUI {
     //Класс GUI для выбора професии
     public static void openGUI(Player p) {
@@ -17,20 +21,18 @@ public class JobGUI {
         Jobs blacksmith = Jobs.BLACKSMITH;
         Jobs alchemist = Jobs.ALCHEMIST;
         Jobs enchanter = Jobs.ENCHANTER;
+
         //если профессия доступна классу, добавляем в GUI
         if(PlayerClassesUtils.getPlayerClass(p).equalsIgnoreCase("wizard")) {
-            inv.setItem(0, ItemUtils.create(enchanter.getClassMaterial(), 1, enchanter.getName(), Jobs.menuName, "Чародей"));
-
+            inv.setItem(0, ItemUtils.create(enchanter.getClassMaterial(), 1, Component.text(enchanter.getName()), Jobs.menuName, List.of(Component.text("Чародей"))));
         } else if (PlayerClassesUtils.getPlayerClass(p).equalsIgnoreCase("sacrifier")) {
-            inv.setItem(0, ItemUtils.create(alchemist.getClassMaterial(), 1, alchemist.getName(), Jobs.menuName, "Алхимик"));
-
+            inv.setItem(0, ItemUtils.create(alchemist.getClassMaterial(), 1, Component.text(alchemist.getName()), Jobs.menuName, List.of(Component.text("Алхимик"))));
         } else if (PlayerClassesUtils.getPlayerClass(p).equalsIgnoreCase("warrior")) {
-            inv.setItem(0, ItemUtils.create(blacksmith.getClassMaterial(), 1, blacksmith.getName(), Jobs.menuName, "Кузнец"));
-
+            inv.setItem(0, ItemUtils.create(blacksmith.getClassMaterial(), 1, Component.text(blacksmith.getName()), Jobs.menuName, List.of(Component.text("Кузнец"))));
         }
-        //Выход из GUI
-        inv.setItem(8, ItemUtils.create(Material.OAK_DOOR, ChatColor.RED + "Выход", "Exit"));
 
+        //Выход из GUI
+        inv.setItem(8, ItemUtils.create(Material.OAK_DOOR, 1, Component.text("Выход", NamedTextColor.RED), "Exit"));
         p.openInventory(inv);
     }
 }

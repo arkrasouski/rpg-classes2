@@ -8,6 +8,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
+import org.example.artyom.rpgClasses.RpgClasses;
 
 public class JobsGUIEvents implements Listener {
     //обработка выбора профессии игрока
@@ -15,22 +16,21 @@ public class JobsGUIEvents implements Listener {
     public void onInventoryClick(InventoryClickEvent e) { //вызовется когда буду кликать по открытому ранее инвернтарю
         Player p = (Player) e.getWhoClicked();
 
-        if(e.getView().getTitle().equalsIgnoreCase("Выбор профессии")){
+        if (e.getView().getTitle().equalsIgnoreCase("Выбор профессии")) {
 
             e.setCancelled(true);
             ItemStack item = e.getCurrentItem();
-            if (item == null || item.getType() == Material.AIR){
-               return;
+            if (item == null || item.getType() == Material.AIR) {
+                return;
             }
             String menuItemString = item.getItemMeta().getPersistentDataContainer().get(NamespacedKey.fromString("menu_item"), PersistentDataType.STRING);
-            if(item.getType() == Material.OAK_DOOR && menuItemString.equals("Exit")){
+            if (item.getType() == Material.OAK_DOOR && menuItemString.equals("Exit")) {
                 p.closeInventory();
-            }
-            else if(menuItemString.equals("Jobs")){
-                System.out.println(item.getItemMeta().getDisplayName());
+            } else if (menuItemString.equals("Jobs")) {
+                RpgClasses.getInstance().getLogger().info(item.getItemMeta().getDisplayName());
                 p.performCommand("getjobs " + item.getItemMeta().getDisplayName().toUpperCase());
             }
-            p.closeInventory();}
-
+            p.closeInventory();
+        }
     }
 }

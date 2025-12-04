@@ -11,35 +11,34 @@ import org.example.artyom.rpgClasses.plugins.Classes;
 public class PlayerClassesUtils {
     //Вспомогательный класс для работы с кастомными классами игрока
     public static void setPlayerClass(Player player, String className) {
-        //Устанавливаем класс игроку
         player.getPersistentDataContainer().set(
-                NamespacedKey.fromString( "player_class"),
+                NamespacedKey.fromString("player_class"),
                 PersistentDataType.STRING,
                 className
         );
     }
 
     public static String getPlayerClass(Player player) {
-        //Получаем класс игрока
         return player.getPersistentDataContainer().get(
-                NamespacedKey.fromString( "player_class"),
+                NamespacedKey.fromString("player_class"),
                 PersistentDataType.STRING
         );
     }
 
-    public static void giveClassParametersToPlayer(Player player, String className) {
+    public static void giveClassParametersToPlayer(Player player, Classes classe) {
         //Устанавливаем класс и вызываем ивент обновления класса (возможно стоит объединить с просто установкой класса)
-        player.sendMessage("I`m " + className + "!");
-        PlayerClassesUtils.setPlayerClass(player, className);
-        Bukkit.getPluginManager().callEvent(new ChangeClassEvent(player, Classes.valueOf(className.toUpperCase())));
+        // player.sendMessage("I`m " + className + "!"); Вот это не надо наверное - mikinol
+
+        setPlayerStats(player, classe);
+        PlayerClassesUtils.setPlayerClass(player, classe.getName().toLowerCase());
+        Bukkit.getPluginManager().callEvent(new ChangeClassEvent(player, classe));
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public static void setPlayerStats(Player player, Classes playerClass) {
         //Выдача базовых параметров для класса
-        player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(playerClass.getHP());
-        player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue());
-
-        player.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(playerClass.getStrength() * 0.25);
-        player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(playerClass.getAgility() * 0.1);
+        player.getAttribute(Attribute.MAX_HEALTH).setBaseValue(playerClass.getHP());
+        player.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(playerClass.getStrength() * 0.25);
+        player.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(playerClass.getAgility() * 0.1);
     }
 }

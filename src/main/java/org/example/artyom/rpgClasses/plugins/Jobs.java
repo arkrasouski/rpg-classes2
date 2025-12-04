@@ -1,11 +1,13 @@
 package org.example.artyom.rpgClasses.plugins;
 
+import lombok.Getter;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
+@Getter
 public enum Jobs {
     //Класс выбора профессии
     //возможно тут стоит перечислять сразу классы доступные для профессии
@@ -15,15 +17,13 @@ public enum Jobs {
 
     NULL("Null", null); //Безработный
 
+    private final String name;
+    private final Material classMaterial;
+    public static final String menuName = "Jobs";
 
-    private String name;
-    private Material classMaterial;
-    public static String menuName = "Jobs";
-
-    Jobs( String name, Material classMaterial) {
+    Jobs(String name, Material classMaterial) {
         this.name = name;
         this.classMaterial = classMaterial;
-
     }
 
     public static Jobs getJobFromItem(ItemStack itemStack) {
@@ -34,21 +34,5 @@ public enum Jobs {
             return null;
         }
         return valueOf(name);
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Material getClassMaterial() {
-        return classMaterial;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setClassMaterial(Material classMaterial) {
-        this.classMaterial = classMaterial;
     }
 }

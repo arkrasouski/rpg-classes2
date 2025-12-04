@@ -19,14 +19,13 @@ public class JobsEvents implements Listener {
 
 
     @EventHandler
-    public void onCraftItemEvent(CraftItemEvent e){
+    public void onCraftItemEvent(CraftItemEvent e) {
         //Если кузнец скрафтит броню, повышаем очки брони для нее
         Player player = (Player) e.getWhoClicked();
 
-        if(PlayerJobsUtils.getPlayerJob(player) != null && PlayerJobsUtils.getPlayerJob(player).equalsIgnoreCase(Jobs.BLACKSMITH.getName())){
+        if (PlayerJobsUtils.getPlayerJob(player) != null && PlayerJobsUtils.getPlayerJob(player).equalsIgnoreCase(Jobs.BLACKSMITH.getName())) {
 
             ItemStack item = e.getRecipe().getResult();
-
 
 
             int jobLevel = PlayerJobsUtils.getPlayerJobLevel(player);
@@ -34,29 +33,20 @@ public class JobsEvents implements Listener {
             if (item.getType().name().contains("BOOTS")) {
                 NamespacedKey key = new NamespacedKey(RpgClasses.getInstance(), "extra_boots");
                 PlayerJobsUtils.addArmor(item, 2, EquipmentSlotGroup.FEET, key, jobLevel);
-            }
-            else if (item.getType().name().contains("CHEST")) {
+            } else if (item.getType().name().contains("CHEST")) {
                 NamespacedKey key = new NamespacedKey(RpgClasses.getInstance(), "extra_chest");
-                    PlayerJobsUtils.addArmor(item, 2, EquipmentSlotGroup.CHEST, key, jobLevel);
-                }
-
-            else if (item.getType().name().contains("LEGGINGS")) {
+                PlayerJobsUtils.addArmor(item, 2, EquipmentSlotGroup.CHEST, key, jobLevel);
+            } else if (item.getType().name().contains("LEGGINGS")) {
                 NamespacedKey key = new NamespacedKey(RpgClasses.getInstance(), "extra_leggins");
                 PlayerJobsUtils.addArmor(item, 2, EquipmentSlotGroup.LEGS, key, jobLevel);
-            }
-            else if (item.getType().name().contains("HELMET")) {
+            } else if (item.getType().name().contains("HELMET")) {
                 NamespacedKey key = new NamespacedKey(RpgClasses.getInstance(), "extra_helmet");
                 PlayerJobsUtils.addArmor(item, 2, EquipmentSlotGroup.HEAD, key, jobLevel);
             }
 
+            e.getInventory().setResult(item);
 
-                e.getInventory().setResult(item);
-
-                Bukkit.getPluginManager().callEvent(new ChangeLevelOrExpEvent(player));
-//
+            Bukkit.getPluginManager().callEvent(new ChangeLevelOrExpEvent(player));
         }
     }
-
-
-
 }
